@@ -13,6 +13,6 @@ USE_MPI=FALSE
 
 (cd "$AMREX_HOME" && patch -p0) < amrex.patch
 
-make CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" USE_MPI="$USE_MPI" $1
+make CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" USE_MPI="$USE_MPI" "$@"
 
 (cd "$AMREX_HOME" && patch -R -p0) < amrex.patch

@@ -26,6 +26,12 @@ Thus, `build.sh` changes the default compiler to `clang++`, overwrites
 the compiler flags to change the target for SYCL builds to CUDA and
 patches AMReX to use the same warp size for DPC++ as it does for CUDA.
 
+Note that `build.sh` expects this benchmark to be placed inside its respective
+directory in [amrex-tutorials](https://github.com/AMReX-Codes/amrex-tutorials)
+which should be placed alongside [amrex](https://github.com/AMReX-Codes/amrex).
+Change `AMREX_HOME` in `build.sh` to point to a different location if this is
+not the case.
+
 #### Executing
 
 To run the benchmark, simply do:

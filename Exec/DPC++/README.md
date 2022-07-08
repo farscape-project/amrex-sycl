@@ -20,8 +20,10 @@ The makefile reuses the source code for the CUDA version of the benchmark
 (there really is no CUDA, just generic code that gets versioned by AMReX's
 conditional compilation flow) and leverages AMReX's DPC++ build settings by
 using `USE_DPCPP = TRUE`.
+
 Since AMReX is expecting the production-ready Intel oneAPI DPC++/C++ Compiler
 which does not have a CUDA backend, a compatible compiler must instead be used.
+As of this writing we support [intel/llvm](https://github.com/intel/llvm).
 Thus, `build.sh` changes the default compiler to `clang++`, overwrites
 the compiler flags to change the target for SYCL builds to CUDA and
 patches AMReX to use the same warp size for DPC++ as it does for CUDA.

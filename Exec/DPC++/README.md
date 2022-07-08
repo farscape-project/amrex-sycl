@@ -1,0 +1,33 @@
+### SYCL/DPC++-on-CUDA implementation of the ElectromagneticPIC benchmark
+
+#### Building
+
+To build the benchmark, probe the build system or clean leftovers from previous
+builds, do _not_ directly invoke GNU Make, instead do:
+
+`./build.sh [make-options]`
+
+For example:
+
+`./build.sh -j6` or
+`./build.sh print-CXXFLAGS` or
+`./build.sh clean` or
+`./build.sh realclean`
+
+As the reader might have guessed and as a quick inspection of `build.sh` will
+reveal, the script is no more than a wrapper around `GNUMakefile`.
+The makefile reuses the source code for the CUDA version of the benchmark
+(there really is no CUDA, just generic code that gets versioned by AMReX's
+conditional compilation flow) and leverages AMReX's DPC++ build settings by
+using `USE_DPCPP = TRUE`.
+Since AMReX is expecting the production-ready Intel oneAPI DPC++/C++ Compiler
+which does not have a CUDA backend, a compatible compiler must instead be used.
+Thus, `build.sh` changes the default compiler to `clang++`, overwrites
+the compiler flags to change the target for SYCL builds to CUDA and
+patches AMReX to use the same warp size for DPC++ as it does for CUDA.
+
+#### Executing
+
+To run the benchmark, simply do:
+
+`./main3d.dpcpp.TPROF.ex inputs`

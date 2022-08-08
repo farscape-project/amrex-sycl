@@ -8,6 +8,13 @@ CXXFLAGS="-g1 -O3 -std=c++17 \
 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -fsycl-device-code-split=per_kernel \
 -mlong-double-64 -Xclang -mlong-double-64 -pthread"
 
+CC=syclcc
+CXX=syclcc
+
+CXXFLAGS="-g1 -O3 -std=c++17 \
+--hipsycl-targets=cuda:sm_70 \
+-pthread"
+
 USE_MPI=FALSE
 
 

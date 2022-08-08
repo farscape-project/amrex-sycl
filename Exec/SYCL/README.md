@@ -23,10 +23,14 @@ using `USE_DPCPP = TRUE`.
 
 Since AMReX is expecting the production-ready Intel oneAPI DPC++/C++ Compiler
 which does not have a CUDA backend, a compatible compiler must instead be used.
-As of this writing we support [intel/llvm](https://github.com/intel/llvm).
-Thus, `build.sh` changes the default compiler to `clang++`, overwrites
-the compiler flags to change the target for SYCL builds to CUDA and
-patches AMReX to use the same warp size for DPC++ as it does for CUDA.
+As of this writing we support [intel/llvm](https://github.com/intel/llvm) and
+[hipSYCL](https://github.com/illuhad/hipSYCL), but only its clang flavour. This
+is because, even though hipSYCL can also support CUDA as a library by wrapping
+nvc++, this compiler does a single-source single compiler pass (SSCP) and not a
+single-source multiple compiler pass (SMCP) which AMReX is expecting.
+Thus, `build.sh` changes the default compiler to `clang++` or `syclcc`,
+overwrites the compiler flags to change the target for SYCL builds to CUDA and
+patches AMReX to use the same warp size for SYCL/DPC++ as it does for CUDA.
 
 Note that `build.sh` expects this benchmark to be placed inside its respective
 directory in [amrex-tutorials](https://github.com/AMReX-Codes/amrex-tutorials)

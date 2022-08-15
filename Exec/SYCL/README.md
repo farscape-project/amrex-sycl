@@ -26,12 +26,14 @@ which does not have a CUDA backend, a compatible compiler must instead be used.
 As of this writing we support [intel/llvm](https://github.com/intel/llvm) and
 [hipSYCL](https://github.com/illuhad/hipSYCL).
 
-For hipSYCL we currently only support its clang flavour. The reason is, even
-though hipSYCL can also support CUDA as a library by wrapping nvc++, this
-compiler follows the single-source single compiler pass (SSCP) model and not
-the single-source multiple compiler pass (SMCP) model which AMReX is expecting.
-In fact, AMReX uses macros such as `__SYCL_DEVICE_ONLY__` to detect if the
-device is being targeted breaking the SSCP model.
+For hipSYCL we are currently trying to build support for using nvc++, since
+early testing suggests clang cannot produce a binary with competitive
+performance. Since nvc++ follows the single-source single compiler pass (SSCP)
+model and not the single-source multiple compiler pass (SMCP) model which AMReX
+is expecting, leveraging nvc++ requires deeper code changes.
+In fact, AMReX uses macros such as `AMREX_DEVICE_COMPILE` and
+`__SYCL_DEVICE_ONLY__` to detect if the device is being targeted thereby
+breaking the SSCP model.
 
 `build.sh` changes the default compiler to `clang++` or `syclcc` for
 intel/llvm and hipSYCL respectively, overwrites the compiler flags to change

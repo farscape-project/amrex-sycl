@@ -21,8 +21,8 @@ LDFLAGS=-fsycl-device-lib=libc,libm-fp32,libm-fp64
 CC=syclcc
 CXX=syclcc
 
-CXXFLAGS="-g1 -O3 -std=c++17 \
---hipsycl-targets=cuda:sm_70 \
+CXXFLAGS="-O3 -std=c++17 \
+--hipsycl-targets=cuda-nvcxx \
 -pthread"
 
 LDFLAGS=
@@ -32,6 +32,6 @@ USE_MPI=FALSE
 
 (cd "$AMREX_HOME" && patch -p0) < amrex.patch
 
-make CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" USE_MPI="$USE_MPI" "$@"
+make DEPFLAGS= CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" USE_MPI="$USE_MPI" "$@"
 
 (cd "$AMREX_HOME" && patch -R -p0) < amrex.patch

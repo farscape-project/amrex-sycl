@@ -149,5 +149,5 @@ void check_solution(const MultiFab& jx, const Geometry& geom, Real time)
 
     ParallelDescriptor::ReduceRealMax(max_error);
 
-    amrex::Print() << "Max error is: " << max_error << std::endl;
+    amrex::Print() << "Max error is: " << max_error << " time: " << time << " wp: " << wp << " j_exact: " << j_exact << std::endl;
 }

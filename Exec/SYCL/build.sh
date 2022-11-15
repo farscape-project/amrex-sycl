@@ -10,6 +10,8 @@ CXX=clang++
 CXXFLAGS="-g1 -O3 -std=c++17 \
 -Wno-pass-failed -Wno-tautological-constant-compare -Wno-error=sycl-strict \
 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -fsycl-device-code-split=per_kernel \
+-fgpu-inline-threshold=100000 \
+-Xsycl-target-backend --cuda-gpu-arch=sm_50 \
 -mlong-double-64 -Xclang -mlong-double-64 -pthread"
 
 LDFLAGS=-fsycl-device-lib=libc,libm-fp32,libm-fp64

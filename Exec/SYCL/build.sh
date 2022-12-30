@@ -23,8 +23,9 @@ LDFLAGS=-fsycl-device-lib=libc,libm-fp32,libm-fp64
 CC=syclcc
 CXX=syclcc
 
-CXXFLAGS="-O3 -std=c++17 \
---hipsycl-targets=cuda-nvcxx \
+CXXFLAGS="-g1 -O3 -std=c++17 \
+-fgpu-inline-threshold=100000 \
+--hipsycl-targets=cuda:sm_70 \
 -pthread"
 
 LDFLAGS=

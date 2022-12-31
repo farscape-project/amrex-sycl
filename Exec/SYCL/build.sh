@@ -7,12 +7,11 @@ AMREX_HOME=../../../../../../amrex
 CC=clang++
 CXX=clang++
 
-CXXFLAGS="-g1 -O3 -std=c++17 \
--Wno-pass-failed -Wno-tautological-constant-compare -Wno-error=sycl-strict \
--fsycl -fsycl-targets=nvptx64-nvidia-cuda -fsycl-device-code-split=per_kernel \
+CXXFLAGS="-g1 -O3 -std=c++17 -pthread \
 -fgpu-inline-threshold=100000 \
+-fsycl -fsycl-targets=nvptx64-nvidia-cuda \
 -Xsycl-target-backend --cuda-gpu-arch=sm_70 \
--mlong-double-64 -Xclang -mlong-double-64 -pthread"
+-Xclang -mlong-double-64"
 
 LDFLAGS=-fsycl-device-lib=libc,libm-fp32,libm-fp64
 
@@ -23,10 +22,9 @@ LDFLAGS=-fsycl-device-lib=libc,libm-fp32,libm-fp64
 CC=syclcc
 CXX=syclcc
 
-CXXFLAGS="-g1 -O3 -std=c++17 \
+CXXFLAGS="-g1 -O3 -std=c++17 -pthread \
 -fgpu-inline-threshold=100000 \
---hipsycl-targets=cuda:sm_70 \
--pthread"
+--hipsycl-targets=cuda:sm_70"
 
 LDFLAGS=
 

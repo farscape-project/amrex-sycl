@@ -15,7 +15,7 @@ PRECISION     = DOUBLE
 USE_MPI       = FALSE
 USE_OMP       = FALSE
 USE_ACC       = FALSE
-USE_DPCPP     = TRUE
+USE_SYCL      = TRUE
 
 BL_NO_FORT    = TRUE
 

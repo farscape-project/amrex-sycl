@@ -54,12 +54,15 @@ fi
 
 USE_MPI=FALSE
 
-if [[ $2 == "gfx"* ]]; then
-    (cd "$AMREX_HOME" && patch -p0) < amd.patch
+if [[ $2 == "sm_"* ]]; then
+    patch -R -p0 < amd_inputs.patch
+elif [[ $2 == "gfx"* ]]; then
+    (cd "$AMREX_HOME" && patch -p0) < amd_amrex.patch
+    patch -p0 < amd_inputs.patch
 fi
 
 make DEPFLAGS= CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" USE_MPI="$USE_MPI" "${@:3}"
 
 if [[ $2 == "gfx"* ]]; then
-    (cd "$AMREX_HOME" && patch -R -p0) < amd.patch
+    (cd "$AMREX_HOME" && patch -R -p0) < amd_amrex.patch
 fi

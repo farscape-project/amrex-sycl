@@ -48,7 +48,8 @@ LDFLAGS=
 ###
 
 else
-    echo "ERROR"
+    echo "Error: Unrecognised compiler!" 1>&2
+    exit 1
 fi
 
 USE_MPI=FALSE

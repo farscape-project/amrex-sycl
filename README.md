@@ -1,53 +1,109 @@
-### SYCL/DPC++-on-CUDA implementation of the ElectromagneticPIC benchmark
+# A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
 
-#### Building
+The plug-in consists of build scripts and code patches which extend
+[AMReX](https://amrex-codes.github.io)'s SYCL capability beyond Intel GPUs.
+As of this writing we support a couple of open-source SYCL compiler and runtime
+frameworks:
+- [DPC++](https://github.com/intel/llvm) (proprietary solutions, e.g. the
+[Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)
+and its [plugins](https://codeplay.com/portal/blogs/2022/12/16/bringing-nvidia-and-amd-support-to-oneapi.html),
+should also work)
+- [Open SYCL](https://github.com/OpenSYCL/OpenSYCL) (formerly known as hipSYCL)
 
-To build the benchmark, probe the build system or clean leftovers from previous
-builds, do _not_ directly invoke GNU Make, instead do:
+The plug-in has been tested on _all_ the generally available high performance
+computing GPUs, which at the beginning of 2023 means the following cards:
 
-`./build.sh [make-options]`
+- AMD: MI100, MI210 and MI250
+- Nvidia: V100 and A100
 
-For example:
+Since AMReX also includes native support for both the Nvidia CUDA and the AMD
+HIP programming models, a direct comparison against those is trivial. We have
+shown elsewhere that the SYCL implementation is at least as fast as those
+vendor alternatives.
 
-`./build.sh -j6` or
-`./build.sh print-CXXFLAGS` or
-`./build.sh clean` or
-`./build.sh realclean`
+## Installing a SYCL compiler and runtime framework
+
+The plug-in works with DPC++ and Open SYCL, so you can choose to install either
+or both depending on your needs.
+In order to use DPC++, you need only install... [TODO]
+
+## Installing the plug-in
+
+Get AMReX and its tutorials in a directory of your choice:
+
+```
+git clone https://github.com/AMReX-Codes/amrex
+git clone https://github.com/AMReX-Codes/amrex-tutorials
+```
+
+Copy the contents of this repository and place them alongside the source files
+of the ElectromagneticPIC tutorial:
+
+```
+git clone url_of_this_repository
+cp -r empic-bench/SYCL amrex-tutorials/ExampleCodes/Particles/ElectromagneticPIC/Exec
+```
+
+If you wish to use an existing AMReX installation, adjust `AMREX_HOME` at the
+top of `build.sh` to point to the desired location.
+
+## Building the tutorial
+
+If you wish to clean leftovers from previous builds, you can simply do:
+
+`make clean` or `make realclean`
+
+However, to build the tutorial or probe the build system, do _not_ directly
+invoke GNU Make, instead do:
+
+`./build.sh compiler gpu_arch [amrex_make_opts]`
+
+- `compiler` is either `dpcpp` (also `dpc++`) or `opensycl` (also `hipsycl`)
+- `gpu_arch` is an architecture or compute capability specification, for
+example:
+    - `gfx908` for the AMD MI100 or `gfx90a` for the AMD MI200 series
+    - `sm_70` for the Nvidia V100 or `sm_80` for the Nvidia A100
+
+    See the
+    [ROCm installation guide](https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4.3/page/Prerequisites.html#d5434e299)
+    or the
+    [Nvidia developer pages](https://developer.nvidia.com/cuda-gpus) for other
+    AMD or Nvidia GPUs, respectively.
+- `amrex_make_opts` is any valid variable or command as listed in
+[AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html)
 
 As the reader might have guessed and as a quick inspection of `build.sh` will
 reveal, the script is no more than a wrapper around `GNUMakefile`.
-The makefile reuses the source code for the CUDA version of the benchmark
+The makefile reuses the source code from the CUDA version of the tutorial
 (there really is no CUDA, just generic code that gets versioned by AMReX's
-conditional compilation flow) and leverages AMReX's DPC++ build settings by
-using `USE_DPCPP = TRUE`.
+conditional compilation flow) and leverages AMReX's existing SYCL compilation
+flow by setting `USE_SYCL = TRUE`.
 
-Since AMReX is expecting the production-ready Intel oneAPI DPC++/C++ Compiler
-which does not have a CUDA backend, a compatible compiler must instead be used.
-As of this writing we support [intel/llvm](https://github.com/intel/llvm) and
-[hipSYCL](https://github.com/illuhad/hipSYCL).
+### Examples
 
-For hipSYCL we are currently trying to build support for using nvc++, since
-early testing suggests clang cannot produce a binary with competitive
-performance. Since nvc++ follows the single-source single compiler pass (SSCP)
-model and not the single-source multiple compiler pass (SMCP) model which AMReX
-is expecting, leveraging nvc++ requires deeper code changes.
-In fact, AMReX uses macros such as `AMREX_DEVICE_COMPILE` and
-`__SYCL_DEVICE_ONLY__` to detect if the device is being targeted thereby
-breaking the SSCP model.
+To build the tutorial for the Nvidia A100 using DPC++ with six parallel jobs:
 
-`build.sh` changes the default compiler to `clang++` or `syclcc` for
-intel/llvm and hipSYCL respectively, overwrites the compiler flags to change
-the target for SYCL builds to CUDA and patches AMReX to use the same warp size
-for SYCL/DPC++ as it does for CUDA.
+`./build.sh dpcpp sm_80 -j6`
 
-Note that `build.sh` expects this benchmark to be placed inside its respective
-directory in [amrex-tutorials](https://github.com/AMReX-Codes/amrex-tutorials)
-which should be placed alongside [amrex](https://github.com/AMReX-Codes/amrex).
-Change `AMREX_HOME` in `build.sh` to point to a different location if this is
-not the case.
+To print the compiler flags for the AMD MI200 series if using Open SYCL:
 
-#### Executing
+`./build.sh opensycl gfx90a print-CXXFLAGS` 
+
+## How does the plug-in work?
+
+`build.sh` does a handful of alterations, it:
+- Switches AMReX's compiler to `clang++` or `syclcc` for DPC++ or Open SYCL,
+respectively
+- Overwrites the compiler flags to use the appropriate settings depending on
+the compiler you selected, the target vendor assembly/source language, i.e.
+PTX/CUDA or AMDGCN/HIP, and the target architecture
+- Patches AMReX to avoid some missing declarations and SYCL 2020 features
+[Open SYCL only]
+- Patches AMReX to disable managed memory and to use the same wavefront size
+as AMReX's HIP compilation flow [AMD GPUs only]
+
+## Executing the tutorial
 
 To run the benchmark, simply do:
 
-`./main3d.dpcpp.TPROF.ex inputs`
+`./main3d.sycl.TPROF.ex inputs`

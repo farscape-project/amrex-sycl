@@ -1,5 +1,9 @@
 : ${AMREX_HOME:=../../../../../../amrex}
 
+###
+### Parse inputs
+###
+
 if [[ $1 == clean || $1 == realclean ]]; then
     COMP=dpcpp
     GPU_ARCH=none
@@ -60,9 +64,17 @@ else
     exit 1
 fi
 
+###
+### Patch AMReX
+###
+
 if [[ $GPU_ARCH == gfx* ]]; then
     (cd "$AMREX_HOME" && patch -p0) < amd_amrex.patch
 fi
+
+###
+### Build
+###
 
 make -f ../CUDA/GNUmakefile \
      Bpack="../CUDA/Make.package ../../Source/Make.package" \
@@ -78,6 +90,10 @@ make -f ../CUDA/GNUmakefile \
      CXXFLAGS="$CXXFLAGS" \
      LDFLAGS="$LDFLAGS" \
      $AMREX_MAKE_OPTS
+
+###
+### Unpatch AMReX
+###
 
 if [[ $GPU_ARCH == gfx* ]]; then
     (cd "$AMREX_HOME" && patch -R -p0) < amd_amrex.patch

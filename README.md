@@ -25,7 +25,7 @@ vendor alternatives.
 
 The plug-in works with DPC++ and Open SYCL, so you can choose to install either
 or both depending on your needs.
-In order to use DPC++, you need only install... [TODO]
+In order to use DPC++, you need only install... [TODO]()
 
 ## Installing the plug-in
 
@@ -50,12 +50,12 @@ desired location.
 
 ## Building the tutorial
 
-If you wish to clean leftovers from previous builds, you can simply do:
+If at any point you wish to clean leftovers from previous builds, you can
+simply run:
 
-`make clean` or `make realclean`
+`./build.sh clean` or `./build.sh realclean`
 
-However, to build the tutorial or probe the build system, do _not_ directly
-invoke GNU Make, instead do:
+And to build the tutorial or probe the build system:
 
 `./build.sh compiler gpu_arch [amrex_make_opts]`
 
@@ -73,13 +73,6 @@ example:
 - `amrex_make_opts` is any valid variable or command as listed in
 [AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html)
 
-As the reader might have guessed and as a quick inspection of `build.sh` will
-reveal, the script is no more than a wrapper around `GNUMakefile`.
-The makefile reuses the source code from the CUDA version of the tutorial
-(there really is no CUDA, just generic code that gets versioned by AMReX's
-conditional compilation flow) and leverages AMReX's existing SYCL compilation
-flow by setting `USE_SYCL = TRUE`.
-
 ### Examples
 
 To build the tutorial for the Nvidia A100 using DPC++ with six parallel jobs:
@@ -92,7 +85,15 @@ To print the compiler flags for the AMD MI200 series if using Open SYCL:
 
 ## How does the plug-in work?
 
-`build.sh` does a handful of alterations, it:
+As the reader might have guessed and as a quick inspection of `build.sh` will
+reveal, the script is no more than a wrapper around the `GNUmakefile` already
+provided with the ElectromagneticPIC tutorial.
+The makefile reuses the source code from the CUDA version of the tutorial
+(there really is no CUDA, just generic code that gets versioned by AMReX's
+conditional compilation flow) and leverages AMReX's existing SYCL compilation
+flow by setting `USE_SYCL = TRUE`.
+
+`build.sh` does a handful of alterations to AMReX and its build system, it:
 - Switches AMReX's compiler to `clang++` or `syclcc` for DPC++ or Open SYCL,
 respectively
 - Overwrites the compiler flags to use the appropriate settings depending on

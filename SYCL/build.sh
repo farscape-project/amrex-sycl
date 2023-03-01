@@ -1,4 +1,4 @@
-AMREX_HOME=../../../../../../amrex
+: ${AMREX_HOME:=../../../../../../amrex}
 
 COMP=$( tr '[A-Z]' '[a-z]' <<< $1)
 

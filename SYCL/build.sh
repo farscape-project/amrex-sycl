@@ -52,11 +52,8 @@ else
     exit 1
 fi
 
-if [[ $2 == "sm_"* ]]; then
-    patch -R -p0 < amd_inputs.patch
-elif [[ $2 == "gfx"* ]]; then
+if [[ $2 == "gfx"* ]]; then
     (cd "$AMREX_HOME" && patch -p0) < amd_amrex.patch
-    patch -p0 < amd_inputs.patch
 fi
 
 make DEPFLAGS= CC="$CC" CXX="$CXX" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" "${@:3}"

@@ -9,3 +9,15 @@
  #endif
  
      static unsigned int maxBlocksPerLaunch () noexcept { return max_blocks_per_launch; }
+
+--- Src/Base/AMReX_Arena.cpp
++++ Src/Base/AMReX_Arena.cpp
+@@ -46,7 +46,7 @@ namespace {
+ #ifdef AMREX_USE_HIP
+     bool the_arena_is_managed = false; // xxxxx HIP FIX HERE
+ #else
+-    bool the_arena_is_managed = true;
++    bool the_arena_is_managed = false;
+ #endif
+     bool abort_on_out_of_gpu_memory = false;
+ }

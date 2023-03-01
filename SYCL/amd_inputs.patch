@@ -1,8 +1,0 @@
---- inputs
-+++ inputs
-@@ -12,3 +12,5 @@
- cfl = 1.0
- 
- write_plot = false
-+
-+amrex.the_arena_is_managed = false

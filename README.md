@@ -99,10 +99,11 @@ respectively
 - Overwrites the compiler flags to use the appropriate settings depending on
 the compiler you selected, the target vendor assembly/source language, i.e.
 PTX/CUDA or AMDGCN/HIP, and the target architecture
-- Patches AMReX to avoid some missing declarations and SYCL 2020 features
+- Provides AMReX the right sub-group size (also known as warp or wavefront size
+by Nvidia and AMD, respectively) depending on the target vendor
+- Patches AMReX to avoid missing declarations and SYCL 2020 features
 [Open SYCL only]
-- Patches AMReX to disable managed memory and to use the same wavefront size
-as AMReX's HIP compilation flow [AMD GPUs only]
+- Patches AMReX to disable managed memory [AMD GPUs only]
 
 ## Executing the tutorial
 

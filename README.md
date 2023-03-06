@@ -25,7 +25,29 @@ vendor alternatives.
 
 The plug-in works with DPC++ and Open SYCL, so you can choose to install either
 or both depending on your needs.
-In order to use DPC++, you need only install... [TODO]()
+
+In order to install DPC++, you should skim the
+[getting started guide](https://intel.github.io/llvm-docs/GetStartedGuide.html)
+and follow the instructions for your desired target. If you are feeling lucky,
+here is an incantation that usually works:
+
+```
+CC=gcc CXX=g++ python ./buildbot/configure.py --cuda --cmake-opt="-DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda" -o /path/to/install/dir
+CC=gcc CXX=g++ python ./buildbot/compile.py -o /path/to/install/dir
+```
+
+In order to install Open SYCL, please refer to its
+[documentation](https://github.com/OpenSYCL/OpenSYCL/blob/develop/doc/installing.md).
+If your system does not already provide an LLVM installation, you first need
+one. For the impatient, try to configure, build and install LLVM with:
+
+```
+cmake -S llvm -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang" -DLLVM_BUILD_LLVM_DYLIB=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake --build build
+cmake --build build -- install
+```
+
+ [TODO]()
 
 ## Installing the plug-in
 

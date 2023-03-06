@@ -65,6 +65,16 @@ else
 fi
 
 ###
+### Define sub-group size
+###
+
+if [[ $GPU_ARCH == sm_* ]]; then
+    SUB_GROUP_SIZE=32
+elif [[ $GPU_ARCH == gfx* ]]; then
+    SUB_GROUP_SIZE=64
+fi
+
+###
 ### Patch AMReX
 ###
 
@@ -89,6 +99,7 @@ make -f ../CUDA/GNUmakefile \
      CXX="$CXX" \
      CXXFLAGS="$CXXFLAGS" \
      LDFLAGS="$LDFLAGS" \
+     SYCL_SUB_GROUP_SIZE="$SUB_GROUP_SIZE" \
      $AMREX_MAKE_OPTS
 
 ###

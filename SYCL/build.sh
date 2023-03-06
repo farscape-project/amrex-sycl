@@ -78,6 +78,10 @@ fi
 ### Patch AMReX
 ###
 
+if [[ $COMP == opensycl || $COMP == hipsycl ]]; then
+    (cd "$AMREX_HOME" && patch -p0) < opensycl_amrex.patch
+fi
+
 if [[ $GPU_ARCH == gfx* ]]; then
     (cd "$AMREX_HOME" && patch -p0) < amd_amrex.patch
 fi

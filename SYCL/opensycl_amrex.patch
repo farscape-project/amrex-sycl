@@ -1,0 +1,119 @@
+--- Src/Base/AMReX_FBI.H
++++ Src/Base/AMReX_FBI.H
+@@ -106,7 +106,7 @@ fab_to_fab (Vector<Array4CopyTag<T0, T1> > const& copy_tags, int scomp, int dcom
+             } else {
+                 if (sycl::any_of_group(item.get_sub_group(), msk > mypriority)) {
+                     if (m) { *m = 0; } // yield
+-                    sycl::atomic_fence(sycl::memory_order::acq_rel, sycl::memory_scope::device);
++                    item.mem_fence();
+                     to_try = 1;
+                 } else {
+                     to_try = (msk > 0); // hold on to my lock
+
+--- Src/Base/AMReX_GpuDevice.cpp
++++ Src/Base/AMReX_GpuDevice.cpp
+@@ -473,7 +473,7 @@ Device::initialize_gpu ()
+         device_prop.multiProcessorCount = d.get_info<sycl::info::device::max_compute_units>();
+         device_prop.maxThreadsPerMultiProcessor = -1; // xxxxx SYCL todo: d.get_info<sycl::info::device::max_work_items_per_compute_unit>(); // unknown
+         device_prop.maxThreadsPerBlock = d.get_info<sycl::info::device::max_work_group_size>();
+-        auto mtd = d.get_info<sycl::info::device::max_work_item_sizes<3>>();
++        auto mtd = d.get_info<sycl::info::device::max_work_item_sizes>();
+         device_prop.maxThreadsDim[0] = mtd[0];
+         device_prop.maxThreadsDim[1] = mtd[1];
+         device_prop.maxThreadsDim[2] = mtd[2];
+
+--- Src/Base/AMReX_Math.H
++++ Src/Base/AMReX_Math.H
+@@ -11,6 +11,7 @@
+ 
+ #ifdef AMREX_USE_SYCL
+ #  include <sycl/sycl.hpp>
++namespace sycl { double abs (double); }
+ #endif
+ 
+ namespace amrex { inline namespace disabled {
+
+--- Src/Base/AMReX_Scan.H
++++ Src/Base/AMReX_Scan.H
+@@ -60,7 +60,7 @@ struct BlockStatus<T, true>
+     Data<T> d;
+ 
+     AMREX_GPU_DEVICE AMREX_FORCE_INLINE
+-    void write (char a_status, T a_value) {
++    void write (char a_status, T a_value, sycl::nd_item<1> const& /*item*/) {
+ #if defined(AMREX_USE_CUDA)
+         volatile uint64_t tmp;
+         reinterpret_cast<STVA<T> volatile&>(tmp).status = a_status;
+@@ -98,11 +98,11 @@ struct BlockStatus<T, true>
+     void set_status (char a_status) { d.s.status = a_status; }
+ 
+     AMREX_GPU_DEVICE AMREX_FORCE_INLINE
+-    STVA<T> wait () volatile {
++    STVA<T> wait (sycl::nd_item<1> const& item) volatile {
+         STVA<T> r;
+         do {
+ #if defined(AMREX_USE_SYCL)
+-            sycl::atomic_fence(sycl::memory_order::acq_rel, sycl::memory_scope::work_group);
++            item.mem_fence();
+ #else
+             __threadfence_block();
+ #endif
+@@ -120,14 +120,14 @@ struct BlockStatus<T, false>
+     char status;
+ 
+     AMREX_GPU_DEVICE AMREX_FORCE_INLINE
+-    void write (char a_status, T a_value) {
++    void write (char a_status, T a_value, sycl::nd_item<1> const& item) {
+         if (a_status == 'a') {
+             aggregate = a_value;
+         } else {
+             inclusive = a_value;
+         }
+ #if defined(AMREX_USE_SYCL)
+-        sycl::atomic_fence(sycl::memory_order::acq_rel, sycl::memory_scope::device);
++        item.mem_fence();
+ #else
+         __threadfence();
+ #endif
+@@ -152,12 +152,12 @@ struct BlockStatus<T, false>
+     void set_status (char a_status) { status = a_status; }
+ 
+     AMREX_GPU_DEVICE AMREX_FORCE_INLINE
+-    STVA<T> wait () volatile {
++    STVA<T> wait (sycl::nd_item<1> const& item) volatile {
+         STVA<T> r;
+         do {
+             r = read();
+ #if defined(AMREX_USE_SYCL)
+-            sycl::atomic_fence(sycl::memory_order::acq_rel, sycl::memory_scope::device);
++            item.mem_fence();
+ #else
+             __threadfence();
+ #endif
+@@ -512,7 +512,7 @@ T PrefixSum (N n, FIN && fin, FOUT && fout, TYPE type, RetSum a_ret_sum = retSum
+         // sum_prev_chunk now holds the sum of the whole block.
+         if (threadIdxx == 0 && gridDimx > 1) {
+             block_status.write((virtual_block_id == 0) ? 'p' : 'a',
+-                               sum_prev_chunk);
++                               sum_prev_chunk, *gh.item);
+         }
+ 
+         if (virtual_block_id == 0) {
+@@ -534,7 +534,7 @@ T PrefixSum (N n, FIN && fin, FOUT && fout, TYPE type, RetSum a_ret_sum = retSum
+                     int iblock = iblock0-lane;
+                     detail::STVA<T> stva{'p', 0};
+                     if (iblock >= 0) {
+-                        stva = pbs[iblock].wait();
++                        stva = pbs[iblock].wait(*gh.item);
+                     }
+ 
+                     T x = stva.value;
+@@ -571,7 +571,7 @@ T PrefixSum (N n, FIN && fin, FOUT && fout, TYPE type, RetSum a_ret_sum = retSum
+                 }
+ 
+                 if (lane == 0) {
+-                    block_status.write('p', block_status.get_aggregate() + exclusive_prefix);
++                    block_status.write('p', block_status.get_aggregate() + exclusive_prefix, *gh.item);
+                     shared[0] = exclusive_prefix;
+                 }
+             }

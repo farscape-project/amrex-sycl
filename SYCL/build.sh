@@ -5,12 +5,12 @@
 ###
 
 if [[ $1 == clean || $1 == realclean ]]; then
-    COMP=dpcpp
+    COMP=none
     GPU_ARCH=none
     AMREX_MAKE_OPTS=$1
 else
     COMP=$( tr '[A-Z]' '[a-z]' <<< $1)
-    GPU_ARCH=$2
+    GPU_ARCH=$( tr '[A-Z]' '[a-z]' <<< $2)
     AMREX_MAKE_OPTS=${@:3}
 fi
 
@@ -59,7 +59,7 @@ LDFLAGS=
 ### Unrecognised compiler
 ###
 
-else
+elif [[ $COMP != none || $COMP != none ]]; then
     echo "Error: Unrecognised compiler!" 1>&2
     exit 1
 fi

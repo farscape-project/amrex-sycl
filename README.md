@@ -30,30 +30,31 @@ vendor alternatives.
 ## Installing a SYCL compiler and runtime framework
 
 The plug-in works with DPC++ and Open SYCL, so you can choose to install either
-or both depending on your needs.
+or both depending on your needs. Whichever you choose, you will be using the
+clang/LLVM toolchain to compile your application.
+In fact, DPC++ is Intel's fork of LLVM with compiler and runtime support for
+SYCL. Open SYCL is essentially a wrapper around vanilla LLVM.
 
 In order to install DPC++, you should skim the
-[getting started guide](https://intel.github.io/llvm-docs/GetStartedGuide.html)
-and follow the instructions for your desired target. If you are feeling lucky,
-here is an incantation that usually works:
+[DPC++ getting started guide](https://intel.github.io/llvm-docs/GetStartedGuide.html)
+and follow the instructions for your desired target. Once the installation is
+complete, add:
+- `/path/to/install/dir/bin` to the `PATH` environment variable;
+- `/path/to/install/dir/lib` to the `LD_LIBRARY_PATH` environment variable.
 
-```
-CC=gcc CXX=g++ python ./buildbot/configure.py --cuda --cmake-opt="-DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda" -o /path/to/install/dir
-CC=gcc CXX=g++ python ./buildbot/compile.py -o /path/to/install/dir
-```
+In order to install Open SYCL, please refer to the
+[Open SYCL installation instructions](https://github.com/OpenSYCL/OpenSYCL/blob/develop/doc/installing.md).
+Please note that if your system does not already provide an LLVM installation,
+you first need one. Start by checking the Open SYCL
+[recommendations](https://github.com/OpenSYCL/OpenSYCL/blob/develop/doc/install-llvm.md)
+and the [LLVM installation instructions](https://llvm.org/docs/CMake.html).
+Once the installation is
+complete, add:
+- `/path/to/install/dir/bin` to the `PATH` environment variable.
 
-In order to install Open SYCL, please refer to its
-[documentation](https://github.com/OpenSYCL/OpenSYCL/blob/develop/doc/installing.md).
-If your system does not already provide an LLVM installation, you first need
-one. For the impatient, try to configure, build and install LLVM with:
-
-```
-cmake -S llvm -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang" -DLLVM_BUILD_LLVM_DYLIB=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
-cmake --build build
-cmake --build build -- install
-```
-
- [TODO]()
+:hourglass_flowing_sand: For the impatient, there is a collection of
+incantations that usually work at the
+[bottom of this document](#hourglass-quick-instructions-to-install-a-sycl-compiler-and-runtime-framework).
 
 ## Installing the plug-in
 
@@ -125,10 +126,10 @@ flow by setting `USE_SYCL = TRUE`.
 - Switches AMReX's compiler to `clang++` or `syclcc` for DPC++ or Open SYCL,
 respectively
 - Overwrites the compiler flags to use the appropriate settings depending on
-the compiler you selected, the target vendor assembly/source language, i.e.
-PTX/CUDA or AMDGCN/HIP, and the target architecture
-- Provides AMReX the right sub-group size (also known as warp or wavefront size
-by Nvidia and AMD, respectively) depending on the target vendor
+the selected compiler, the target vendor assembly/source language, i.e.
+AMDGCN/HIP or NVPTX/CUDA, and the target architecture
+- Provides AMReX the right sub-group size (also known as wavefront or warp size
+by AMD and Nvidia, respectively) depending on the target vendor
 - Patches AMReX to avoid missing declarations and SYCL 2020 features
 [Open SYCL only]
 - Patches AMReX to disable managed memory [AMD GPUs only]
@@ -138,3 +139,46 @@ by Nvidia and AMD, respectively) depending on the target vendor
 To run the benchmark, simply do:
 
 `./main3d.sycl.TPROF.ex inputs`
+
+## :hourglass: Quick instructions to install a SYCL compiler and runtime framework
+
+If you are feeling lucky, try to configure, build and install your compiler and
+runtime framework as follows. These lines are meant to be executed from within
+the respective source directories.
+
+### DPC++
+
+AMDGPU
+```
+python ./buildbot/configure.py --hip --cmake-opt="-DSYCL_BUILD_PI_HIP_ROCM_DIR=/path/to/rocm" -o /path/to/install/dir
+python ./buildbot/compile.py -o /path/to/install/dir
+```
+
+NVPTX
+```
+python ./buildbot/configure.py --cuda --cmake-opt="-DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda" -o /path/to/install/dir
+python ./buildbot/compile.py -o /path/to/install/dir
+```
+
+### LLVM
+```
+cmake -S llvm -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=clang -DLLVM_BUILD_LLVM_DYLIB=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake --build build
+cmake --build build -- install
+```
+
+### Open SYCL
+
+HIP
+```
+cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DROCM_PATH=/path/to/rocm -DWITH_ROCM_BACKEND=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake --build build
+cmake --build build -- install
+```
+
+CUDA
+```
+cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda -DWITH_CUDA_BACKEND=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake --build build
+cmake --build build -- install
+```

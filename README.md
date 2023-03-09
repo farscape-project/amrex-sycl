@@ -171,14 +171,14 @@ cmake --build build -- install
 
 HIP
 ```
-cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DROCM_PATH=/path/to/rocm -DWITH_ROCM_BACKEND=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DROCM_PATH=/path/to/rocm -DWITH_ROCM_BACKEND=ON -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
 cmake --build build
 cmake --build build -- install
 ```
 
 CUDA
 ```
-cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda -DWITH_CUDA_BACKEND=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
+cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda -DWITH_CUDA_BACKEND=ON -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
 cmake --build build
 cmake --build build -- install
 ```

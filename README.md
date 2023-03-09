@@ -149,13 +149,13 @@ the respective source directories.
 
 ### DPC++
 
-AMDGPU
+AMD GPUs
 ```
 python ./buildbot/configure.py --hip --cmake-opt="-DSYCL_BUILD_PI_HIP_ROCM_DIR=/path/to/rocm" -o /path/to/install/dir
 python ./buildbot/compile.py -o /path/to/install/dir
 ```
 
-NVPTX
+Nvidia GPUs
 ```
 python ./buildbot/configure.py --cuda --cmake-opt="-DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda" -o /path/to/install/dir
 python ./buildbot/compile.py -o /path/to/install/dir
@@ -170,14 +170,14 @@ cmake --build build -- install
 
 ### Open SYCL
 
-HIP
+AMD GPUs
 ```
 cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DROCM_PATH=/path/to/rocm -DWITH_ROCM_BACKEND=ON -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
 cmake --build build
 cmake --build build -- install
 ```
 
-CUDA
+Nvidia GPUs
 ```
 cmake -S . -B build -DLLVM_ROOT=/path/to/llvm/lib/cmake -DBOOST_ROOT=/path/to/boost -DCUDA_TOOLKIT_ROOT_DIR=/path/to/cuda -DWITH_CUDA_BACKEND=ON -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_INSTALL_PREFIX=/path/to/install/dir
 cmake --build build

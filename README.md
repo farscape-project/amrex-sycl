@@ -74,9 +74,9 @@ git clone url_of_this_repository
 cp -r empic-bench/SYCL amrex-tutorials/ExampleCodes/Particles/ElectromagneticPIC/Exec
 ```
 
-If you wish to use an existing AMReX installation, set the environment variable
-`AMREX_HOME` or change its value at the top of `build.sh` to point to the
-desired location.
+If you wish to use an existing AMReX installation, set the `AMREX_HOME`
+environment variable or change its value at the top of `build.sh` to point to
+the desired location.
 
 ## Building the tutorial
 

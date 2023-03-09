@@ -13,14 +13,15 @@ frameworks:
 - [DPC++](https://github.com/intel/llvm) (proprietary solutions, e.g. the
 [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)
 and its [plugins](https://codeplay.com/portal/blogs/2022/12/16/bringing-nvidia-and-amd-support-to-oneapi.html),
-should also work)
-- [Open SYCL](https://github.com/OpenSYCL/OpenSYCL) (formerly known as hipSYCL)
+should also work);
+- [Open SYCL](https://github.com/OpenSYCL/OpenSYCL)
+(formerly known as hipSYCL).
 
 The plug-in has been tested on _all_ the generally available high performance
 computing GPUs, which at the beginning of 2023 means the following cards:
 
-- AMD: MI100, MI210 and MI250
-- Nvidia: V100 and A100
+- AMD: MI100, MI210 and MI250;
+- Nvidia: V100 and A100.
 
 Since AMReX also includes native support for both the Nvidia CUDA and the AMD
 HIP programming models, a direct comparison against those is trivial. We have
@@ -88,19 +89,19 @@ And to build the tutorial or probe the build system:
 
 `./build.sh compiler gpu_arch [amrex_make_opts]`
 
-- `compiler` is either `dpcpp` (also `dpc++`) or `opensycl` (also `hipsycl`)
+- `compiler` is either `dpcpp` (also `dpc++`) or `opensycl` (also `hipsycl`);
 - `gpu_arch` is an architecture or compute capability specification, for
 example:
-    - `gfx908` for the AMD MI100 or `gfx90a` for the AMD MI200 series
-    - `sm_70` for the Nvidia V100 or `sm_80` for the Nvidia A100
+    - `gfx908` for the AMD MI100 or `gfx90a` for the AMD MI200 series;
+    - `sm_70` for the Nvidia V100 or `sm_80` for the Nvidia A100;
 
-    See the
+    see the
     [ROCm installation guide](https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4.3/page/Prerequisites.html#d5434e299)
     or the
     [Nvidia developer pages](https://developer.nvidia.com/cuda-gpus) for other
-    AMD or Nvidia GPUs, respectively.
+    AMD or Nvidia GPUs, respectively;
 - `amrex_make_opts` is any valid variable or command as listed in
-[AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html)
+[AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html).
 
 ### Examples
 
@@ -123,16 +124,16 @@ conditional compilation flow) and leverages AMReX's existing SYCL compilation
 flow by setting `USE_SYCL = TRUE`.
 
 `build.sh` does a handful of alterations to AMReX and its build system, it:
-- Switches AMReX's compiler to `clang++` or `syclcc` for DPC++ or Open SYCL,
-respectively
-- Overwrites the compiler flags to use the appropriate settings depending on
+- switches AMReX's compiler to `clang++` or `syclcc` for DPC++ or Open SYCL,
+respectively;
+- overwrites the compiler flags to use the appropriate settings depending on
 the selected compiler, the target vendor assembly/source language, i.e.
-AMDGCN/HIP or NVPTX/CUDA, and the target architecture
-- Provides AMReX the right sub-group size (also known as wavefront or warp size
-by AMD and Nvidia, respectively) depending on the target vendor
-- Patches AMReX to avoid missing declarations and SYCL 2020 features
-[Open SYCL only]
-- Patches AMReX to disable managed memory [AMD GPUs only]
+AMDGCN/HIP or NVPTX/CUDA, and the target architecture;
+- provides AMReX the right sub-group size (also known as wavefront or warp size
+by AMD and Nvidia, respectively) depending on the target vendor;
+- patches AMReX to avoid missing declarations and SYCL 2020 features
+[Open SYCL only];
+- patches AMReX to disable managed memory [AMD GPUs only].
 
 ## Executing the tutorial
 

@@ -6,9 +6,26 @@
 
 # A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
 
-The aim of the plug-in is to show that [AMReX](https://amrex-codes.github.io) could be solely written in SYCL while still preserving its notable performance portability features. We demo this with the provided ElectromagneticPIC tutorial. Here is an illustration of electron current-driven Langmuir oscillations at the plasma frequency:
+[SYCL](https://www.khronos.org/sycl/) unlocks single-source development for
+hardware accelerators by leveraging C++ templated functions, greatly easing the
+otherwise laborious task of porting C++ code to heterogeneous architectures.
+The aim of this work is to show that state of the art scientific applications
+like [AMReX](https://amrex-codes.github.io) can be solely written in SYCL
+while still preserving its notable performance portability features.
+
+We showcase the required development effort with
+[AMReX's ElectromagneticPIC tutorial](https://amrex-codes.github.io/amrex/tutorials_html/Particles_Tutorial.html#electromagneticpic)
+due to its relevance to plasma fusion applications which are of natural
+interest to UKAEA, the funder of this work. We note, however, that all AMReX
+applications should be able to benefit.
+Here is an illustration of a PIC simulation you can carry out with this code:
 
 ![Plasma Oscillations](https://github.com/amrPX-Projects/empic-bench/blob/master/Langmuir.gif)
+
+_Current-driven electron Langmuir oscillations at the plasma frequency obtained
+on a 32 x 32 x 32 grid with 1 electron per cell. The mesh is coloured after the 
+amplitude of the oscillating but uniform electric field: from blue (-) to red
+(+)._
 
 The plug-in consists of build scripts and code patches which extend
 AMReX's SYCL capability beyond Intel GPUs.

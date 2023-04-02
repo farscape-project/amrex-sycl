@@ -1,9 +1,6 @@
 | :warning: Open SYCL: please use [PR #959](https://github.com/OpenSYCL/OpenSYCL/pull/959) |
 |-----------------------------------------------------------------------|
 
-| :warning: AMReX: please use [PR #3180](https://github.com/AMReX-Codes/amrex/pull/3180) |
-|-----------------------------------------------------------------------|
-
 # A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
 
 [SYCL](https://www.khronos.org/sycl/) unlocks single-source development for

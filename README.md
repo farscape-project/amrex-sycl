@@ -5,18 +5,17 @@ hardware accelerators by leveraging C++ templated functions, greatly easing the
 otherwise laborious task of porting C++ code to heterogeneous architectures.
 The aim of this work is to show that state of the art scientific applications
 like [AMReX](https://amrex-codes.github.io) can be solely written in SYCL
-while still preserving its notable performance portability features.
+while still preserving its performance portability features.
 
-We showcase the required development effort with
+We demonstrate how minimal the required development effort can be with
 [AMReX's ElectromagneticPIC tutorial](https://amrex-codes.github.io/amrex/tutorials_html/Particles_Tutorial.html#electromagneticpic)
-due to its relevance to plasma fusion applications which are of natural
-interest to UKAEA, the funder of this work. We note, however, that all AMReX
+due to its relevance to plasma fusion applications. We note, however, that all AMReX
 applications should be able to benefit.
 Here is an illustration of a PIC simulation you can carry out with this code:
 
 ![Plasma Oscillations](https://github.com/amrPX-Projects/empic-bench/blob/master/Langmuir.gif)
 
-_Current-driven electron Langmuir oscillations at the plasma frequency obtained
+_Current-driven Langmuir oscillations at the plasma frequency obtained
 on a 32 x 32 x 32 grid with 1 electron per cell. The mesh is coloured after the 
 amplitude of the oscillating but uniform electric field: from blue (-) to red
 (+)._
@@ -42,6 +41,24 @@ Since AMReX also includes native support for both the Nvidia CUDA and the AMD
 HIP programming models, a direct comparison against those is trivial. We have
 shown elsewhere that the SYCL implementation is at least as fast as those
 vendor alternatives.
+
+### Acknowledgments
+
+- Joe Todd ([@joeatodd](https://github.com/joeatodd)),
+Rod Burns ([@rodburns](https://github.com/rodburns)),
+and the Codeplay developer team
+([@codeplaysoftware](https://github.com/codeplaysoftware));
+- Aksel Alpay ([@illuhad](https://github.com/illuhad)),
+and the Open SYCL developer team
+([@opensycl](https://github.com/opensycl));
+- Andrew Myers ([@atmyers](https://github.com/atmyers)),
+Axel Huebl ([@ax3l](https://github.com/ax3l)),
+Weiqun Zhang ([@weiqunzhang](https://github.com/weiqunzhang)),
+and the AMReX developer team
+([@amrex-codes](https://github.com/amrex-codes));
+- UKAEA ([@ukaea](https://github.com/ukaea)),
+and the FARSCAPE project
+([@farscape-project](https://github.com/farscape-project)) for funding this work.
 
 ## Installing a SYCL compiler and runtime framework
 

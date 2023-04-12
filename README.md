@@ -47,15 +47,22 @@ vendor alternatives.
 - Joe Todd ([@joeatodd](https://github.com/joeatodd)),
 Rod Burns ([@rodburns](https://github.com/rodburns)),
 and the Codeplay developer team
-([@codeplaysoftware](https://github.com/codeplaysoftware));
+([@codeplaysoftware](https://github.com/codeplaysoftware))
+for helping to identify an issue with slow floating-point atomics on the GPU,
+and for developing the AMD and Nvidia support plugins for DPC++;
 - Aksel Alpay ([@illuhad](https://github.com/illuhad)),
 and the Open SYCL developer team
-([@opensycl](https://github.com/opensycl));
+([@opensycl](https://github.com/opensycl))
+for cultivating a welcoming spirit in the community,
+for reviewing and suggesting improvements to our contributions to Open SYCL,
+and for developing Open SYCL;
 - Andrew Myers ([@atmyers](https://github.com/atmyers)),
 Axel Huebl ([@ax3l](https://github.com/ax3l)),
 Weiqun Zhang ([@weiqunzhang](https://github.com/weiqunzhang)),
 and the AMReX developer team
-([@amrex-codes](https://github.com/amrex-codes));
+([@amrex-codes](https://github.com/amrex-codes))
+for welcoming and reviewing our contributions to AMReX and its tutorials,
+and for developing AMReX;
 - UKAEA ([@ukaea](https://github.com/ukaea)),
 and the FARSCAPE project
 ([@farscape-project](https://github.com/farscape-project)) for funding this work.

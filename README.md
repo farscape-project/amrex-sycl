@@ -48,12 +48,12 @@ vendor alternatives.
 Rod Burns ([@rodburns](https://github.com/rodburns)),
 and the Codeplay developer team
 ([@codeplaysoftware](https://github.com/codeplaysoftware))
-for helping to identify an issue with slow floating-point atomics on the GPU,
+for helping to identify an issue with slow floating-point atomics on GPUs,
 and for developing the AMD and Nvidia support plugins for DPC++;
 - Aksel Alpay ([@illuhad](https://github.com/illuhad)),
 and the Open SYCL developer team
 ([@opensycl](https://github.com/opensycl))
-for cultivating a welcoming spirit in the community,
+for cultivating a welcoming community,
 for reviewing and suggesting improvements to our contributions to Open SYCL,
 and for developing Open SYCL;
 - Andrew Myers ([@atmyers](https://github.com/atmyers)),

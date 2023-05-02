@@ -1,5 +1,6 @@
 # A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
 _**Nuno Nobre**, Alex Grant, Karthikeyan Chockalingam and Xiaohu Guo_
+###
 
 [SYCL](https://www.khronos.org/sycl/) unlocks single-source development for
 hardware accelerators by leveraging C++ templated functions, greatly easing the

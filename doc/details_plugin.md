@@ -12,9 +12,9 @@ flow by setting `USE_SYCL = TRUE`.
 respectively;
 - overwrites the compiler flags to use the appropriate settings depending on
 the selected compiler, the target vendor assembly/source language, i.e.
-AMDGCN/HIP or NVPTX/CUDA, and the target architecture;
-- provides AMReX the right sub-group size (also known as wavefront or warp size
-by AMD and Nvidia, respectively) depending on the target vendor;
+NVPTX/CUDA or AMDGCN/HIP, and the target architecture;
+- provides AMReX the right sub-group size (also known as warp or wavefront size
+by Nvidia and AMD, respectively) depending on the target vendor;
 - patches AMReX to avoid missing declarations and SYCL 2020 features
 [Open SYCL only];
 - patches AMReX to disable managed memory [AMD GPUs only].

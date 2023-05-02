@@ -14,7 +14,7 @@ This is due to the tutorial's relevance to plasma fusion but we note that
 all AMReX applications should be able to benefit.
 Here is an illustration of a PIC simulation you can carry out using this code:
 
-![Plasma Oscillations](https://github.com/amrPX-Projects/empic-bench/blob/master/doc/Langmuir.gif)
+![Plasma Oscillations](https://github.com/amrPX-Projects/empic-bench/blob/master/doc/fig/Langmuir.gif)
 
 _Current-driven Langmuir oscillations at the plasma frequency on a
 32 x 32 x 32 grid with 1 electron per cell. The mesh is coloured after the
@@ -34,13 +34,22 @@ should also work);
 The plug-in has been tested on _all_ the generally available high performance
 computing GPUs, which at the beginning of 2023 means the following cards:
 
-- AMD: MI100, MI210 and MI250;
-- Nvidia: V100 and A100.
+- Nvidia: V100 and A100;
+- AMD: MI100, MI210 and MI250.
 
 Since AMReX also includes native support for both the Nvidia CUDA and the AMD
-HIP programming models, a direct comparison against those is trivial. We have
-shown elsewhere that the SYCL implementation is at least as fast as those
-vendor alternatives.
+HIP programming models, a direct comparison against those is trivial. This plot
+shows that the SYCL implementation is as fast as those vendor alternatives.
+
+![Performance Results](https://github.com/amrPX-Projects/empic-bench/blob/master/doc/fig/Performance.png)
+
+_SYCL vs CUDA and HIP. Performance comparison for a Langmuir oscillations
+simulation on a 128 x 128 x 128 grid with 64 electrons per cell and 100 time
+steps. The PIC loop is always faster on the SYCL implementation, but the
+particle initialisation routine is notably slower, meaning the small number of
+iterations results in slower execution times for SYCL on some GPUs such as the
+A100. For a detailed per-routine comparison for each GPU, see
+[here](doc/fig/PerformancePerRoutine.pdf)._
 
 To learn how to install and use the plug-in, continue reading
 [here](doc/use_plugin.md).
@@ -52,7 +61,7 @@ Rod Burns ([@rodburns](https://github.com/rodburns)),
 and the Codeplay developer team
 ([@codeplaysoftware](https://github.com/codeplaysoftware))
 for helping to identify an issue with slow floating-point atomics on GPUs,
-and for developing the AMD and Nvidia support plugins for DPC++;
+and for developing the Nvidia and AMD support plugins for DPC++;
 - Aksel Alpay ([@illuhad](https://github.com/illuhad)),
 and the Open SYCL developer team
 ([@opensycl](https://github.com/opensycl))

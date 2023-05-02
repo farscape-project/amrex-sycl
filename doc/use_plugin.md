@@ -38,14 +38,14 @@ And to build the tutorial or probe the build system:
 - `compiler` is either `dpcpp` (also `dpc++`) or `opensycl` (also `hipsycl`);
 - `gpu_arch` is an architecture or compute capability specification, for
 example:
-    - `gfx908` for the AMD MI100 or `gfx90a` for the AMD MI200 series;
     - `sm_70` for the Nvidia V100 or `sm_80` for the Nvidia A100;
+    - `gfx908` for the AMD MI100 or `gfx90a` for the AMD MI200 series;
 
     see the
-    [ROCm installation guide](https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4.3/page/Prerequisites.html#d5434e299)
+    [Nvidia developer pages](https://developer.nvidia.com/cuda-gpus)
     or the
-    [Nvidia developer pages](https://developer.nvidia.com/cuda-gpus) for other
-    AMD or Nvidia GPUs, respectively;
+    [ROCm installation guide](https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4.3/page/Prerequisites.html#d5434e299)
+    for other Nvidia or AMD GPUs, respectively;
 - `amrex_make_opts` is any valid variable or command listed in
 [AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html).
 

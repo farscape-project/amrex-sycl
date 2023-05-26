@@ -14,6 +14,8 @@ else
     AMREX_MAKE_OPTS=${@:3}
 fi
 
+CXXFLAGS="-g1 -O3 -std=c++17 -pthread -fgpu-inline-threshold=100000"
+
 ###
 ### DPC++
 ###
@@ -23,15 +25,14 @@ if [[ $COMP == dpcpp || $COMP == dpc++ ]]; then
 CC=clang++
 CXX=clang++
 
-CXXFLAGS="-g1 -O3 -std=c++17 -pthread -fgpu-inline-threshold=100000 \
-          -fsycl -Xclang -mlong-double-64"
+CXXFLAGS+=" -fsycl -Xclang -mlong-double-64"
 
 if [[ $GPU_ARCH == sm_* ]]; then
-    CXXFLAGS=$CXXFLAGS" -fsycl-targets=nvptx64-nvidia-cuda \
-                        -Xsycl-target-backend --cuda-gpu-arch=$GPU_ARCH"
+    CXXFLAGS+=" -fsycl-targets=nvptx64-nvidia-cuda \
+                -Xsycl-target-backend --cuda-gpu-arch=$GPU_ARCH"
 elif [[ $GPU_ARCH == gfx* ]]; then
-    CXXFLAGS=$CXXFLAGS" -fsycl-targets=amdgcn-amd-amdhsa \
-                        -Xsycl-target-backend --offload-arch=$GPU_ARCH"
+    CXXFLAGS+=" -fsycl-targets=amdgcn-amd-amdhsa \
+                -Xsycl-target-backend --offload-arch=$GPU_ARCH"
 fi
 
 LDFLAGS="-fsycl-device-lib=libc,libm-fp32,libm-fp64"
@@ -45,12 +46,10 @@ elif [[ $COMP == opensycl || $COMP == hipsycl ]]; then
 CC=syclcc
 CXX=syclcc
 
-CXXFLAGS="-g1 -O3 -std=c++17 -pthread -fgpu-inline-threshold=100000"
-
 if [[ $GPU_ARCH == sm_* ]]; then
-    CXXFLAGS=$CXXFLAGS" --hipsycl-targets=cuda:$GPU_ARCH"
+    CXXFLAGS+=" --hipsycl-targets=cuda:$GPU_ARCH"
 elif [[ $GPU_ARCH == gfx* ]]; then
-    CXXFLAGS=$CXXFLAGS" --hipsycl-targets=hip:$GPU_ARCH -munsafe-fp-atomics"
+    CXXFLAGS+=" --hipsycl-targets=hip:$GPU_ARCH -munsafe-fp-atomics"
 fi
 
 LDFLAGS=

@@ -1,5 +1,8 @@
 # A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
+
 _**Nuno Nobre**, Alex Grant, Karthikeyan Chockalingam and Xiaohu Guo_
+
+[![DOI](https://zenodo.org/badge/650097643.svg)](https://zenodo.org/badge/latestdoi/650097643)
 ###
 
 [SYCL](https://www.khronos.org/sycl/) unlocks single-source development for

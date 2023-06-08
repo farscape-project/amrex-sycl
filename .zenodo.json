@@ -1,0 +1,24 @@
+{
+    "title": "farscape-project/amrex-sycl", 
+    "license": "BSD-3-Clause", 
+    "creators": [
+        {
+            "affiliation": "UKRI STFC: Hartree Centre", 
+            "name": "Nuno Nobre",
+	        "orcid": "0000-0002-2380-5384"
+        },
+        {
+            "affiliation": "UKRI STFC: Hartree Centre", 
+            "name": "Alex Grant"
+        },
+        {
+            "affiliation": "UKRI STFC: Hartree Centre", 
+            "name": "Karthikeyan Chockalingam"
+        },
+        {
+            "affiliation": "UKRI STFC: Hartree Centre", 
+            "name": "Xiaohu Guo",
+	        "orcid": "0000-0003-3545-3432"
+        }
+    ]
+}

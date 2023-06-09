@@ -1,4 +1,4 @@
-# A SYCL plug-in for AMReX's ElectromagneticPIC tutorial
+# A SYCL plug-in to run AMReX apps on AMD/Nvidia GPUs
 
 _**Nuno Nobre**, Alex Grant, Karthikeyan Chockalingam and Xiaohu Guo_
 
@@ -30,13 +30,12 @@ AMReX's SYCL capability beyond Intel GPUs.
 We support two open-source SYCL compiler and runtime frameworks:
 - [DPC++](https://github.com/intel/llvm) (proprietary solutions, e.g. the
 [Intel oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)
-and its [plugins](https://codeplay.com/portal/blogs/2022/12/16/bringing-nvidia-and-amd-support-to-oneapi.html),
-should also work);
+and its [plugins](https://codeplay.com/solutions/oneapi/), should also work);
 - [Open SYCL](https://github.com/OpenSYCL/OpenSYCL)
 (formerly known as hipSYCL).
 
-The plug-in has been tested on _all_ the generally available high performance
-computing GPUs, which at the beginning of 2023 means the following cards:
+The plug-in has been tested on _all_ the high performance computing GPUs
+generally available at the beginning of 2023:
 
 - Nvidia: V100 and A100;
 - AMD: MI100, MI210 and MI250.

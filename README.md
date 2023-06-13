@@ -48,11 +48,12 @@ shows that the SYCL implementation is as fast as those vendor alternatives.
 
 _SYCL vs CUDA and HIP. Performance comparison for a Langmuir oscillations
 simulation on a 128 x 128 x 128 grid with 64 electrons per cell and 100 time
-steps. The PIC loop is always faster on the SYCL implementation, but the
-particle initialisation routine is notably slower, meaning the small number of
-iterations results in slower execution times for SYCL on some GPUs such as the
-A100. For a detailed per-routine comparison for each GPU, see
-[here](doc/fig/PerformancePerRoutine.pdf)._
+steps. The AMD MI100 is an order of magnitude slower due to the lack of support
+for FP64 atomics on that GPU. The PIC loop is always faster on the SYCL
+implementation, but the particle initialisation routine is notably slower,
+meaning the small number of iterations results in slower execution times for
+SYCL on some GPUs such as the A100. For a detailed per-routine comparison for
+each GPU, see [here](doc/fig/PerformancePerRoutine.pdf)._
 
 To learn how to install and use the plug-in, continue reading
 [here](doc/use_plugin.md).
@@ -63,8 +64,8 @@ To learn how to install and use the plug-in, continue reading
 Rod Burns ([@rodburns](https://github.com/rodburns)),
 and the Codeplay developer team
 ([@codeplaysoftware](https://github.com/codeplaysoftware))
-for helping to identify an issue with slow floating-point atomics on GPUs,
-and for developing the Nvidia and AMD support plugins for DPC++;
+for helping to identify an issue with slow FP atomics on GPUs, and for
+developing the Nvidia and AMD support plugins for DPC++;
 - Aksel Alpay ([@illuhad](https://github.com/illuhad)),
 and the Open SYCL developer team
 ([@opensycl](https://github.com/opensycl))

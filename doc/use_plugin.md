@@ -17,7 +17,7 @@ of the ElectromagneticPIC tutorial:
 
 ```
 git clone url_of_this_repository
-cp -r empic-bench/SYCL amrex-tutorials/ExampleCodes/Particles/ElectromagneticPIC/Exec
+cp -r amrex-sycl/SYCL amrex-tutorials/ExampleCodes/Particles/ElectromagneticPIC/Exec
 ```
 
 If you wish to use an existing AMReX installation, set the `AMREX_HOME`

@@ -18,7 +18,7 @@ This is due to the tutorial's relevance to plasma fusion but we note that
 all AMReX applications should be able to benefit.
 Here is an illustration of a PIC simulation you can carry out using this code:
 
-![Plasma Oscillations](https://github.com/amrPX-Projects/empic-bench/blob/master/doc/fig/Langmuir.gif)
+![Plasma Oscillations](doc/fig/Langmuir.gif)
 
 _Current-driven Langmuir oscillations at the plasma frequency on a
 32 x 32 x 32 grid with 1 electron per cell. The mesh is coloured after the
@@ -44,7 +44,7 @@ Since AMReX also includes native support for both the Nvidia CUDA and the AMD
 HIP programming models, a direct comparison against those is trivial. This plot
 shows that the SYCL implementation is as fast as those vendor alternatives.
 
-![Performance Results](https://github.com/amrPX-Projects/empic-bench/blob/master/doc/fig/Performance.png)
+![Performance Results](doc/fig/Performance.png)
 
 _SYCL vs CUDA and HIP. Performance comparison for a Langmuir oscillations
 simulation on a 128 x 128 x 128 grid with 64 electrons per cell and 100 time

@@ -4,8 +4,11 @@ The plug-in works with DPC++ and Open SYCL, so you can choose to install either
 or both depending on your needs by following
 [these](install_compiler.md) instructions.
 
-Once you have a working compiler and runtime framework, get AMReX and its
-tutorials in a directory of your choice:
+Once you have a working compiler and runtime framework, make sure you have
+a copy of the
+[oneMKL](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html)
+development headers on your system. Then, get AMReX and its tutorials in a
+directory of your choice:
 
 ```
 git clone https://github.com/AMReX-Codes/amrex

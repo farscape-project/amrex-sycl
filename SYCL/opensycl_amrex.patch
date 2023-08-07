@@ -10,17 +10,6 @@
                  } else {
                      to_try = (msk > 0); // hold on to my lock
 
---- Src/Base/AMReX_Math.H
-+++ Src/Base/AMReX_Math.H
-@@ -11,6 +11,7 @@
- 
- #ifdef AMREX_USE_SYCL
- #  include <sycl/sycl.hpp>
-+namespace sycl { double abs (double); }
- #endif
- 
- namespace amrex { inline namespace disabled {
-
 --- Src/Base/AMReX_Scan.H
 +++ Src/Base/AMReX_Scan.H
 @@ -60,7 +60,7 @@ struct BlockStatus<T, true>

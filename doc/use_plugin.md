@@ -19,7 +19,7 @@ Copy the contents of this repository and place them alongside the source files
 of the ElectromagneticPIC tutorial:
 
 ```
-git clone url_of_this_repository
+git clone https://github.com/farscape-project/amrex-sycl.git
 cp -r amrex-sycl/SYCL amrex-tutorials/ExampleCodes/Particles/ElectromagneticPIC/Exec
 ```
 

@@ -47,7 +47,7 @@ example:
     see the
     [Nvidia developer pages](https://developer.nvidia.com/cuda-gpus)
     or the
-    [ROCm installation guide](https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4.3/page/Prerequisites.html#d5434e299)
+    [ROCm documentation](https://rocm.docs.amd.com/en/latest/release/gpu_os_support.html)
     for other Nvidia or AMD GPUs, respectively;
 - `amrex_make_opts` is any valid variable or command listed in
 [AMReX's documentation](https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html).
